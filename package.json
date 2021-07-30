@@ -4,16 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest -i",
+    "build": "npx tsc --outDir dist",
+    "start": "node dist/src/server.js",
+    "postinstall": "npm run build",
+    "dev": "npx nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jest": "^26.0.24",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "faker": "^5.5.3",
-    "pg": "^8.7.0"
+    "pg": "^8.7.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.34"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
