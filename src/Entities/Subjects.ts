@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne } from "typeorm";
 import Teacher from './Teacher';
+import Semester from './Semester';
 
 @Entity("subjects")
 export default class Subject {
@@ -10,9 +11,12 @@ export default class Subject {
     @Column()
     name: string;
     
+    @ManyToOne(() => Semester, semester => semester.subjects) 
+    semester: Semester;
+
     @ManyToMany(() => Teacher)
     @JoinTable({
-        name: "subjects_teachers_teachers",
+        name: "subjects_teachers",
         joinColumns: [{ name: "subjectId" }],
         inverseJoinColumns: [{ name: "teacherId" }]
       })

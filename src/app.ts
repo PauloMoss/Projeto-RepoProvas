@@ -10,9 +10,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/subjects", testsController.getSubjects);
+app.get("/subjects/new_test", testsController.getSubjectsWithTeachers);
 
 app.post("/new_test", testsController.postNewTest);
+
+app.get("/subjects", testsController.getSubjectsByPeriod);
+
+app.get("/tests/subject/:id", testsController.getTestsBySubjectId);
 
 export default app;
 

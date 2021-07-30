@@ -20,10 +20,35 @@ export async function postNewTest (req: Request, res: Response ) {
     }
 }
 
-export async function getSubjects (req: Request, res: Response ) {
+export async function getSubjectsWithTeachers (req: Request, res: Response ) {
     try{
         
-        const subjects = await testsService.getAllSubjects();
+        const subjects = await testsService.getSubjectsAndTeachers();
+        
+        return res.send(subjects);
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+}
+
+export async function getSubjectsByPeriod (req: Request, res: Response ) {
+    try{
+        
+        const subjects = await testsService.getSemesterSubjects();
+        
+        return res.send(subjects);
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+}
+
+
+export async function getTestsBySubjectId (req: Request, res: Response ) {
+    try{
+        const id = Number(req.params.id)
+        const subjects = await testsService.getSubjectTests(id);
         
         return res.send(subjects);
     } catch(e) {

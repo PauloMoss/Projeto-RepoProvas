@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne,JoinColumn } from "typeorm";
+import Subject from './Subjects';
 
 @Entity("tests")
 export default class Tests {
@@ -19,5 +20,5 @@ export default class Tests {
     categoryId: number;
 
     @Column()
-    semesterId: number
+    semesterId: number;
 }
