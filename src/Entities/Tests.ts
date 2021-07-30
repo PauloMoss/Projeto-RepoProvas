@@ -1,5 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne,JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import Subject from './Subjects';
+import Category from "./Category";
+import Teacher from "./Teacher";
+import Period from "./Period";
+
 
 @Entity("tests")
 export default class Tests {
@@ -8,7 +12,7 @@ export default class Tests {
     id: number;
 
     @Column()
-    testLink: string;
+    link: string;
 
     @Column()
     subjectId: number;
@@ -17,8 +21,20 @@ export default class Tests {
     teacherId: number;
 
     @Column()
-    categoryId: number;
+    periodId: number;
 
     @Column()
-    semesterId: number;
+    categoryId: number;
+
+    @ManyToOne(() => Subject, subject => subject.tests)
+    subject: Subject;
+
+    @ManyToOne(() => Teacher, teacher => teacher.tests)
+    teacher: Teacher;
+
+    @ManyToOne(() => Period, period => period.tests)
+    period: Period;
+
+    @ManyToOne(() => Category, category => category.tests)
+    category: Category;
 }

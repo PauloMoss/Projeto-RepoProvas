@@ -6,9 +6,9 @@ import * as testsService from '../Services/testsService';
 export async function postNewTest (req: Request, res: Response ) {
     try{
         const params = req.body as PostNewTestBody;
-        const {testLink, subjectId, teacherId, categoryId, semesterId } = params
+        const {link, subjectId, teacherId, categoryId, periodId } = params
 
-        if(!testLink || !subjectId || !teacherId || !categoryId || !semesterId) {
+        if(!link || !subjectId || !teacherId || !categoryId || !periodId) {
             return res.sendStatus(400);
         }
         
@@ -48,9 +48,9 @@ export async function getSubjectsByPeriod (req: Request, res: Response ) {
 export async function getTestsBySubjectId (req: Request, res: Response ) {
     try{
         const id = Number(req.params.id)
-        const subjects = await testsService.getSubjectTests(id);
+        const subjectTests = await testsService.getSubjectTests(id);
         
-        return res.send(subjects);
+        return res.send(subjectTests);
     } catch(e) {
         console.log(e);
         res.sendStatus(500);

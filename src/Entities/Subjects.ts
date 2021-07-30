@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne, OneToMany } from "typeorm";
 import Teacher from './Teacher';
 import Semester from './Semester';
+import Tests from './Tests';
 
 @Entity("subjects")
 export default class Subject {
@@ -21,8 +22,7 @@ export default class Subject {
         inverseJoinColumns: [{ name: "teacherId" }]
       })
     teachers: Teacher[];
+
+    @OneToMany(() => Tests, tests => tests.subject)
+    tests: Tests[]
 }
-
-
-/*@OneToMany(() => Subjects_Teachers, st => st.subject)
-    teacherConnection: Promise<Subjects_Teachers[]>*/

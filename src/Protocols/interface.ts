@@ -1,8 +1,8 @@
 
 export interface PostNewTestBody {
-    testLink: string;
+    link: string;
     categoryId: number;
     subjectId: number;
     teacherId: number;
-    semesterId: number
+    periodId: number
 }

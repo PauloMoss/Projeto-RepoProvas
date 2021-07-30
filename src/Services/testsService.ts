@@ -30,7 +30,7 @@ export async function getSemesterSubjects() {
 
 export async function getSubjectTests(id:number) {
 
-    const result = await getRepository(Category).find({ relations:["subjects"]})
+    const result = await getRepository(Category).find({ relations:["tests","tests.subject","tests.teacher","tests.period"]})
 
     return result
 }

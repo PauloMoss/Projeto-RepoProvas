@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany, JoinTable  } from "typeorm";
 import Subject from './Subjects';
+import Tests from "./Tests";
 
 @Entity("teachers")
 export default class Teacher {
@@ -12,7 +13,7 @@ export default class Teacher {
     
     @ManyToMany(() => Subject, subjects => subjects.teachers) 
     subjects: Subject[];
-}
 
-/*@OneToMany(() => Subjects_Teachers, st => st.teacher)
-    subjectConnection: Promise<Subjects_Teachers[]>*/
+    @OneToMany(() => Tests, tests => tests.teacher)
+    tests: Tests[]
+}

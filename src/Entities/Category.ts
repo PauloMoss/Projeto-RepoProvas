@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable, OneToMany } from "typeorm";
 import Subject from "./Subjects";
+import Tests from "./Tests";
 
 @Entity("category")
 export default class Category {
@@ -9,8 +10,7 @@ export default class Category {
 
     @Column()
     name: string;
-}
 
-/*@JoinColumn([
-        { name: "subjectId", referencedColumnName: "id" }
-    ])*/
+    @OneToMany(() => Tests, tests => tests.category)
+    tests: Tests[]
+}
