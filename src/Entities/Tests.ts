@@ -14,16 +14,16 @@ export default class Tests {
     @Column()
     link: string;
 
-    @Column()
+    @Column({ select: false })
     subjectId: number;
 
-    @Column()
+    @Column({ select: false })
     teacherId: number;
 
-    @Column()
+    @Column({ select: false })
     periodId: number;
 
-    @Column()
+    @Column({ select: false })
     categoryId: number;
 
     @ManyToOne(() => Subject, subject => subject.tests)

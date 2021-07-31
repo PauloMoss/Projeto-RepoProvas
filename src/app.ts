@@ -14,9 +14,13 @@ app.get("/subjects/new_test", testsController.getSubjectsWithTeachers);
 
 app.post("/new_test", testsController.postNewTest);
 
-app.get("/subjects", testsController.getSubjectsByPeriod);
+app.get("/subjects", testsController.getSubjectsBySemester);
+
+app.get("/teachers", testsController.getAllTeachers);
 
 app.get("/tests/subject/:id", testsController.getTestsBySubjectId);
+
+app.get("/tests/teacher/:id", testsController.getTestsByTeacherId);
 
 export default app;
 

@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOn
 import Teacher from './Teacher';
 import Semester from './Semester';
 import Tests from './Tests';
+import Category from "./Category";
 
 @Entity("subjects")
 export default class Subject {

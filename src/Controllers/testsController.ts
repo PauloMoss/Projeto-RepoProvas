@@ -1,18 +1,24 @@
 import { Request, Response } from 'express';
+import dayjs from 'dayjs';
 
 import { PostNewTestBody } from '../Protocols/interface';
 import * as testsService from '../Services/testsService';
 
 export async function postNewTest (req: Request, res: Response ) {
     try{
-        const params = req.body as PostNewTestBody;
-        const {link, subjectId, teacherId, categoryId, periodId } = params
+        const {link, subjectId, teacherId, categoryId, period } = req.body as PostNewTestBody;
+        let { year } = req.body as PostNewTestBody;
 
-        if(!link || !subjectId || !teacherId || !categoryId || !periodId) {
+        if(!link || !subjectId || !teacherId || !categoryId || !period || !year) {
             return res.sendStatus(400);
         }
+
+        const periodId = await testsService.checkYears(period, dayjs(year).format("YYYY"))
+
+        const params = {link, subjectId, teacherId, categoryId, periodId }
         
-        await testsService.saveNewTest(params)
+        await testsService.saveNewTest(params);
+        
         return res.sendStatus(201);
     } catch(e) {
         console.log(e);
@@ -32,12 +38,36 @@ export async function getSubjectsWithTeachers (req: Request, res: Response ) {
     }
 }
 
-export async function getSubjectsByPeriod (req: Request, res: Response ) {
+export async function getSubjectsBySemester (req: Request, res: Response ) {
     try{
         
         const subjects = await testsService.getSemesterSubjects();
         
         return res.send(subjects);
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+}
+
+export async function getTestsByTeacherId (req: Request, res: Response ) {
+    try{
+        const id = Number(req.params.id)
+        const subjects = await testsService.getTeachersTests(id);
+        
+        return res.send(subjects);
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+}
+
+export async function getAllTeachers (req: Request, res: Response ) {
+    try{
+        
+        const teachers = await testsService.getTeachers();
+        
+        return res.send(teachers);
     } catch(e) {
         console.log(e);
         res.sendStatus(500);
