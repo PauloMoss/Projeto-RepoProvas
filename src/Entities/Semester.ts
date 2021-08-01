@@ -10,6 +10,6 @@ export default class Semester {
     @Column()
     name: string;
     
-    @OneToMany(() => Subject, subjects => subjects.semester) 
+    @OneToMany(() => Subject, subjects => subjects.semester, { onDelete: "CASCADE"}) 
     subjects: Subject[];
 }

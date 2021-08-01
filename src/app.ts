@@ -25,5 +25,6 @@ app.get("/tests/teacher/:id", testsController.getTestsByTeacherId);
 export default app;
 
 export async function init() {
-    await connectDatabase();
-  }
+  
+    await connectDatabase()
+}

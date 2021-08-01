@@ -12,18 +12,21 @@ export default class Subject {
 
     @Column()
     name: string;
+
+    @Column({ select: false })
+    semesterId: number;
     
-    @ManyToOne(() => Semester, semester => semester.subjects) 
+    @ManyToOne(() => Semester, semester => semester.subjects, {cascade: true}) 
     semester: Semester;
 
-    @ManyToMany(() => Teacher)
+    @ManyToMany(() => Teacher, { cascade: true})
     @JoinTable({
         name: "subjects_teachers",
         joinColumns: [{ name: "subjectId" }],
-        inverseJoinColumns: [{ name: "teacherId" }]
+        inverseJoinColumns: [{ name: "teacherId" }],
       })
     teachers: Teacher[];
 
-    @OneToMany(() => Tests, tests => tests.subject)
+    @OneToMany(() => Tests, tests => tests.subject, { onDelete: "CASCADE"})
     tests: Tests[]
 }

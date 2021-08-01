@@ -11,9 +11,9 @@ export default class Teacher {
     @Column()
     name: string;
     
-    @ManyToMany(() => Subject, subjects => subjects.teachers) 
+    @ManyToMany(() => Subject, subjects => subjects.teachers, { onDelete: "CASCADE"}) 
     subjects: Subject[];
 
-    @OneToMany(() => Tests, tests => tests.teacher)
+    @OneToMany(() => Tests, tests => tests.teacher, { onDelete: "CASCADE"})
     tests: Tests[]
 }

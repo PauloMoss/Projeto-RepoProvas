@@ -13,6 +13,6 @@ export default class Period {
     @Column()
     year: Date;
     
-    @OneToMany(() => Tests, tests => tests.period)
+    @OneToMany(() => Tests, tests => tests.period, { onDelete: "CASCADE"})
     tests: Tests[]
 }

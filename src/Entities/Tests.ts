@@ -26,15 +26,15 @@ export default class Tests {
     @Column({ select: false })
     categoryId: number;
 
-    @ManyToOne(() => Subject, subject => subject.tests)
+    @ManyToOne(() => Subject, subject => subject.tests, {cascade: true})
     subject: Subject;
 
-    @ManyToOne(() => Teacher, teacher => teacher.tests)
+    @ManyToOne(() => Teacher, teacher => teacher.tests, { cascade: true})
     teacher: Teacher;
 
-    @ManyToOne(() => Period, period => period.tests)
+    @ManyToOne(() => Period, period => period.tests, { cascade: true})
     period: Period;
 
-    @ManyToOne(() => Category, category => category.tests)
+    @ManyToOne(() => Category, category => category.tests, { cascade: true})
     category: Category;
 }

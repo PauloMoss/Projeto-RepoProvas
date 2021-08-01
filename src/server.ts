@@ -1,7 +1,10 @@
+import './setup';
 import app, { init } from "./app";
 
+const port = process.env.PORT;
+
 init().then(() => {
-  app.listen(4000, () => {
-    console.log("Server running on port 4000!");
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}!`);
   });
 });
