@@ -4,6 +4,5 @@
       "esModuleInterop": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true
-    },
-    "exclude": ["node_modules", "tests"]
+    }
   }

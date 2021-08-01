@@ -1,4 +1,4 @@
-import { getRepository } from "typeorm";
+import { getConnection, getRepository } from "typeorm";
 import Tests from "../../src/Entities/Tests";
 import Category from "../../src/Entities/Category";
 import Period from "../../src/Entities/Period";
@@ -15,13 +15,10 @@ export async function clearDatabase() {
     await getRepository(Teacher).clear();
     await getRepository(Category).clear();
     */
-
-    /*
-    TRUNCATE semester RESTART IDENTITY CASCADE;
-    TRUNCATE period RESTART IDENTITY CASCADE;
-    TRUNCATE teachers RESTART IDENTITY CASCADE;
-    TRUNCATE category RESTART IDENTITY CASCADE;
-    */
+    getConnection().query("TRUNCATE semester RESTART IDENTITY CASCADE");
+    getConnection().query("TRUNCATE period RESTART IDENTITY CASCADE");
+    getConnection().query("TRUNCATE teachers RESTART IDENTITY CASCADE");
+    getConnection().query("TRUNCATE category RESTART IDENTITY CASCADE");
 }
 
 export async function insertFakeTest() {

@@ -10,15 +10,15 @@ import { clearDatabase, populateDatabase, insertFakeTest } from "../utils/databa
 beforeAll(init);
 
 beforeEach(async () => {
-    /*await clearDatabase();
-    await populateDatabase();*/
+    await clearDatabase();
+    await populateDatabase();
 })
 
 afterAll( async ()=>{
     await getConnection().close();
 })
 
-/*describe("POST /new_test",() => {
+describe("POST /new_test",() => {
     it("returns status 201 for successfuly created test", async () => {
         const body = createNewTest()
 
@@ -43,7 +43,7 @@ afterAll( async ()=>{
         expect(beforeInsert.length).toEqual(0)
         expect(afterInsert.length).toEqual(0)
     })
-})*/
+})
 
 describe("GET /subjects/new_test", () => {
     it("returns status 200 for successfuly get subjects and teachers", async () => {
