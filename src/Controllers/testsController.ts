@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 
 import { PostNewTestBody } from '../Protocols/interface';
 import * as testsService from '../Services/testsService';
+import {newTestSchema} from '../Schemas/testsSchemas'
 
 export async function postNewTest (req: Request, res: Response ) {
     try{
@@ -11,6 +12,11 @@ export async function postNewTest (req: Request, res: Response ) {
 
         if(!link || !subjectId || !teacherId || !categoryId || !period || !year) {
             return res.sendStatus(400);
+        }
+
+        const err = newTestSchema.validate({link, subjectId, teacherId, categoryId, period, year }).error;
+        if(err) {
+            return 400;
         }
 
         const periodId = await testsService.checkYears(period, dayjs(year).format("YYYY"))

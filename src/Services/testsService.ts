@@ -8,9 +8,10 @@ import Semester from "../Entities/Semester";
 import Category from "../Entities/Category";
 import Period from "../Entities/Period";
 
-export async function saveNewTest(params:PostParams) {
 
-    return await getRepository(Tests).insert(params)
+export async function saveNewTest(params:PostParams) {
+    
+   return await getRepository(Tests).insert(params);
 }
 
 export async function checkYears(period: string, year:string) {
