@@ -7,7 +7,7 @@ export default async function connectDatabase () {
     name: "default",
     type: "postgres",
     url: process.env.DATABASE_URL,
-    entities: ["src/Entities/*.ts"]
+    entities: [process.env.ENTITIES_PATH]
   });
 
   await connection.connect();
