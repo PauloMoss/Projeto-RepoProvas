@@ -22,6 +22,10 @@ app.get("/tests/subject/:id", testsController.getTestsBySubjectId);
 
 app.get("/tests/teacher/:id", testsController.getTestsByTeacherId);
 
+app.get("/teste", (req,res) => {
+    res.send("no ar!")
+});
+
 export default app;
 
 export async function init() {
