@@ -9,16 +9,10 @@ import * as Factory from './Factory';
 
 export async function clearDatabase() {
 
-    /*
-    await getRepository(Semester).clear();
-    await getRepository(Period).clear();
-    await getRepository(Teacher).clear();
-    await getRepository(Category).clear();
-    */
-    getConnection().query("TRUNCATE semester RESTART IDENTITY CASCADE");
-    getConnection().query("TRUNCATE period RESTART IDENTITY CASCADE");
-    getConnection().query("TRUNCATE teachers RESTART IDENTITY CASCADE");
-    getConnection().query("TRUNCATE category RESTART IDENTITY CASCADE");
+    await getConnection().query("TRUNCATE semester RESTART IDENTITY CASCADE");
+    await getConnection().query("TRUNCATE period RESTART IDENTITY CASCADE");
+    await getConnection().query("TRUNCATE teachers RESTART IDENTITY CASCADE");
+    await getConnection().query("TRUNCATE category RESTART IDENTITY CASCADE");
 }
 
 export async function insertFakeTest() {
@@ -38,12 +32,11 @@ export async function populateDatabase() {
     const semester = Factory.createNewSemester()
     const teacher = Factory.createNewTeacher()
     const subject = Factory.createNewSubject()
-    const subjectTeacher = Factory.subjectTeacherRelation()
 
     await getRepository(Category).insert({ name:category })
     await getRepository(Period).insert(period)
     await getRepository(Semester).insert({ name:semester })
     await getRepository(Subject).insert(subject)
     await getRepository(Teacher).insert({ name: teacher })
-    // INSERT INTO subjects_teachers ("subjectId","teacherId") VALUES ($1,$2), subjectTeacher
+    await getConnection().query(`INSERT INTO subjects_teachers ("subjectId", "teacherId") VALUES (1,1)`);
 }

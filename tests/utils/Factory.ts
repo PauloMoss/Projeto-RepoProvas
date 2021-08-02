@@ -13,7 +13,7 @@ export function createNewTest() {
 }
 
 export function createNewSubject() {
-    const name = "Something Fake";
+    const name = "Subject Fake";
     const semesterId = 1;
     return {name, semesterId}
 }
@@ -29,7 +29,7 @@ export function createNewTeacher() {
 }
 
 export function createNewCategory() {
-    const name = faker.fake("prova");
+    const name = faker.fake("Prova 1");
     return name
 }
 
@@ -37,10 +37,4 @@ export function createNewPeriod() {
     const name = "2021.2";
     const year = "2021"
     return {name, year}
-}
-
-export function subjectTeacherRelation() {
-    const subjectId = 1;
-    const teacherId = 1;
-    return [subjectId, teacherId]
 }

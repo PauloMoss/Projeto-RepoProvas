@@ -51,6 +51,8 @@ describe("GET /subjects/new_test", () => {
         const result = await supertest(app).get("/subjects/new_test");
 
         expect(result.status).toEqual(200);
+        expect(result.body.subjects.length).toEqual(1);
+        expect(result.body.categories.length).toEqual(1);
     })
 })
 
@@ -60,6 +62,8 @@ describe("GET /subjects", () => {
         const result = await supertest(app).get("/subjects");
 
         expect(result.status).toEqual(200);
+        expect(result.body[0].name).toEqual("1 semestre");
+        expect(result.body[0].subjects.length).toEqual(1);
     })
 })
 
@@ -67,17 +71,23 @@ describe("GET /teachers", () => {
     it("returns status 200 for successfuly get all teachers", async () => {
 
         const result = await supertest(app).get("/teachers");
-
+        
         expect(result.status).toEqual(200);
+        expect(result.body[0].name).not.toEqual(undefined);
+        expect(result.body[0].id).toEqual(1);
     })
 })
 
 describe("GET /tests/subject/:id", () => {
     it("returns status 200 for successfuly get all tests for subject with id", async () => {
 
+        await insertFakeTest();
+
         const result = await supertest(app).get("/tests/subject/1");
 
         expect(result.status).toEqual(200);
+        expect(result.body[0].name).not.toEqual(undefined);
+        expect(result.body[0].tests.length).toEqual(1);
     })
 })
 
@@ -87,5 +97,7 @@ describe("GET /tests/teacher/:id", () => {
         const result = await supertest(app).get("/tests/teacher/1");
 
         expect(result.status).toEqual(200);
+        expect(result.body[0].name).not.toEqual(undefined);
+        expect(result.body[0].tests.length).toEqual(0);
     })
 })

@@ -16,7 +16,7 @@ export async function postNewTest (req: Request, res: Response ) {
 
         const err = newTestSchema.validate({link, subjectId, teacherId, categoryId, period, year }).error;
         if(err) {
-            return 400;
+            return res.sendStatus(400);
         }
 
         const periodId = await testsService.checkYears(period, dayjs(year).format("YYYY"))
