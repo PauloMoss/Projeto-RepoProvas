@@ -1,5 +1,5 @@
 
-export interface PostNewTestBody {
+export interface PostNewExamBody {
     link: string;
     categoryId: number;
     subjectId: number;

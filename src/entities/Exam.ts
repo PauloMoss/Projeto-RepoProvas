@@ -1,12 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
-import Subject from './Subjects';
+import Subject from './Subject';
 import Category from "./Category";
 import Teacher from "./Teacher";
-import Period from "./Period";
+import Semester from "./Semester";
 
 
-@Entity("tests")
-export default class Tests {
+@Entity("exam")
+export default class Exam {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -21,20 +21,20 @@ export default class Tests {
     teacherId: number;
 
     @Column({ select: false })
-    periodId: number;
+    semesterId: number;
 
     @Column({ select: false })
     categoryId: number;
 
-    @ManyToOne(() => Subject, subject => subject.tests, {cascade: true})
+    @ManyToOne(() => Subject, subject => subject.exams, {cascade: true})
     subject: Subject;
 
-    @ManyToOne(() => Teacher, teacher => teacher.tests, { cascade: true})
+    @ManyToOne(() => Teacher, teacher => teacher.exams, { cascade: true})
     teacher: Teacher;
 
-    @ManyToOne(() => Period, period => period.tests, { cascade: true})
-    period: Period;
+    @ManyToOne(() => Semester, semester => semester.exams, { cascade: true})
+    semester: Semester;
 
-    @ManyToOne(() => Category, category => category.tests, { cascade: true})
+    @ManyToOne(() => Category, category => category.exams, { cascade: true})
     category: Category;
 }

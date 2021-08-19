@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import Subject from './Subjects';
+import Exam from './Exam';
 
 @Entity("semester")
 export default class Semester {
@@ -9,7 +9,10 @@ export default class Semester {
 
     @Column()
     name: string;
-    
-    @OneToMany(() => Subject, subjects => subjects.semester, { onDelete: "CASCADE"}) 
-    subjects: Subject[];
+
+    @Column()
+    year: Date;
+
+    @OneToMany(() => Exam, exams => exams.semester, { onDelete: "CASCADE"})
+    exams: Exam[]
 }
