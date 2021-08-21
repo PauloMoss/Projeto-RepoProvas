@@ -3,6 +3,8 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import Subject from "./Subject";
 import CourseTeacher from "./CourseTeacher";
 import CourseTerm from "./CourseTerm";
+import Term from "./Term";
+import Teacher from "./Teacher";
 
 @Entity("course")
 export default class Course {
@@ -20,4 +22,8 @@ export default class Course {
 
   @OneToMany(() => CourseTerm, (courseTerms) => courseTerms.course)
   courseTerms: CourseTerm[];
+
+  terms: Term[];
+
+  teachers: Teacher[];
 }

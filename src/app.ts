@@ -3,6 +3,8 @@ import cors from "cors";
 import "reflect-metadata";
 
 import connectDatabase from "./database";
+import * as categoryController from "./controllers/categoryController";
+import * as courseController from "./controllers/courseController";
 import * as examController from "./controllers/examController";
 
 const app = express();
@@ -10,23 +12,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/new_test/params", examController.getNewExamParams);
+app.post("/new_test", examController.postNewExam);
 
-app.post("/new_test", examController.postNewTest);
+app.get("/categories", categoryController.getCategories);
 
-app.get("/courses", examController.getCourses);
+app.get("/courses", courseController.getCourses);
 
-app.get("/course/:id/subjects", examController.getCourseSubjects);
+app.get("/course/:id/subjects", courseController.getCourseSubjects);
 
-app.get("/course/:id/teachers", examController.getCourseTeachers);
+app.get("/subject/:id/teachers", courseController.getSubjectTeachers);
 
-app.get("/subjects", examController.getSubjectsBySemester);
+app.get("/course/:id/teachers/exams", examController.getExamsFromCourseTeachers);
 
-app.get("/teachers", examController.getAllTeachers);
-
-app.get("/tests/subject/:id", examController.getTestsBySubjectId);
-
-app.get("/tests/teacher/:id", examController.getTestsByTeacherId);
+app.get("/course/:id/subjects/exams", examController.getExamsFromCourseSubjects);
 
 export default app;
 

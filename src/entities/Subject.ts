@@ -3,6 +3,7 @@ import Exam from "./Exam";
 import SubjectTeacher from "./SubjectTeacher";
 import Course from "./Course";
 import Term from "./Term";
+import Teacher from "./Teacher";
 
 @Entity("subject")
 export default class Subject {
@@ -15,6 +16,9 @@ export default class Subject {
   @Column({ select: false })
   termId: number;
 
+  @Column({ select: false })
+  courseId: number;
+
   @OneToMany(() => Exam, (exams) => exams.subject, { onDelete: "CASCADE" })
   exams: Exam[];
 
@@ -26,4 +30,6 @@ export default class Subject {
 
   @ManyToOne(() => Term, (term) => term.subjects)
   term: Term;
+
+  teachers: Teacher[];
 }

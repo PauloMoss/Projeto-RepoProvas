@@ -3,33 +3,33 @@ import dayjs from "dayjs";
 
 import { PostNewExamBody } from "../protocols/interface";
 import * as examService from "../services/examService";
-import { newTestSchema } from "../schemas/testsSchemas";
+import { newExamSchema } from "../schemas/examSchema";
 
-export async function postNewTest(req: Request, res: Response) {
+export async function postNewExam(req: Request, res: Response) {
   try {
-    const { link, subjectId, teacherId, categoryId, period } =
+    const { link, subjectId, teacherId, categoryId, semester } =
       req.body as PostNewExamBody;
     let { year } = req.body as PostNewExamBody;
 
-    if (!link || !subjectId || !teacherId || !categoryId || !period || !year) {
+    if (!link || !subjectId || !teacherId || !categoryId || !semester || !year) {
       return res.sendStatus(400);
     }
 
-    const err = newTestSchema.validate({
+    const err = newExamSchema.validate({
       link,
       subjectId,
       teacherId,
       categoryId,
-      period,
+      semester,
       year,
     }).error;
     if (err) {
       return res.sendStatus(400);
     }
 
-    const periodId = await examService.checkYears(period, dayjs(year).format("YYYY"));
+    const semesterId = await examService.checkYears(semester, dayjs(year).format("YYYY"));
 
-    const params = { link, subjectId, teacherId, categoryId, periodId };
+    const params = { link, subjectId, teacherId, categoryId, semesterId };
 
     await examService.saveNewTest(params);
 
@@ -40,77 +40,10 @@ export async function postNewTest(req: Request, res: Response) {
   }
 }
 
-export async function getNewExamParams(req: Request, res: Response) {
-  try {
-    const subjects = await examService.getSubjectsAndTeachers();
-
-    return res.send(subjects);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-}
-
-export async function getCourses(req: Request, res: Response) {
-  try {
-    const courses = await examService.getAllCourses();
-
-    return res.send(courses);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-}
-
-export async function getCourseSubjects(req: Request, res: Response) {
+export async function getExamsFromCourseTeachers(req: Request, res: Response) {
   try {
     const courseId = Number(req.params.id);
-    const subjects = await examService.getCourseSubjectsByTerm(courseId);
-
-    return res.send(subjects);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-}
-
-export async function getCourseTeachers(req: Request, res: Response) {
-  try {
-    const courseId = Number(req.params.id);
-    const teachers = await examService.getCourseTeachers(courseId);
-
-    return res.send(teachers);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-}
-export async function getSubjectsBySemester(req: Request, res: Response) {
-  try {
-    const subjects = await examService.getSemesterSubjects();
-
-    return res.send(subjects);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-}
-
-export async function getTestsByTeacherId(req: Request, res: Response) {
-  try {
-    const id = Number(req.params.id);
-    const subjects = await examService.getTeachersTests(id);
-
-    return res.send(subjects);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-}
-
-export async function getAllTeachers(req: Request, res: Response) {
-  try {
-    const teachers = await examService.getTeachers();
+    const teachers = await examService.getTeachersExams(courseId);
 
     return res.send(teachers);
   } catch (e) {
@@ -119,12 +52,12 @@ export async function getAllTeachers(req: Request, res: Response) {
   }
 }
 
-export async function getTestsBySubjectId(req: Request, res: Response) {
+export async function getExamsFromCourseSubjects(req: Request, res: Response) {
   try {
-    const id = Number(req.params.id);
-    const subjectTests = await examService.getSubjectTests(id);
+    const courseId = Number(req.params.id);
+    const subjects = await examService.getSubjectsExamsOrderByTerm(courseId);
 
-    return res.send(subjectTests);
+    return res.send(subjects);
   } catch (e) {
     console.log(e);
     res.sendStatus(500);

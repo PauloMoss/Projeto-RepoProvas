@@ -1,17 +1,16 @@
-
 export interface PostNewExamBody {
-    link: string;
-    categoryId: number;
-    subjectId: number;
-    teacherId: number;
-    period: string;
-    year: Date
+  link: string;
+  categoryId: number;
+  subjectId: number;
+  teacherId: number;
+  semester: string;
+  year: Date;
 }
 
-export interface PostParams {
-    link: string;
-    categoryId: number;
-    subjectId: number;
-    teacherId: number;
-    periodId: number
+export interface InsertParams {
+  link: string;
+  categoryId: number;
+  subjectId: number;
+  teacherId: number;
+  semesterId: number;
 }
