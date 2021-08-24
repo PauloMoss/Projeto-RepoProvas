@@ -3,7 +3,6 @@ import cors from "cors";
 import "reflect-metadata";
 
 import connectDatabase from "./database";
-import * as categoryController from "./controllers/categoryController";
 import * as courseController from "./controllers/courseController";
 import * as examController from "./controllers/examController";
 
@@ -14,7 +13,7 @@ app.use(express.json());
 
 app.post("/new_test", examController.postNewExam);
 
-app.get("/categories", categoryController.getCategories);
+app.get("/categories", examController.getCategories);
 
 app.get("/courses", courseController.getCourses);
 

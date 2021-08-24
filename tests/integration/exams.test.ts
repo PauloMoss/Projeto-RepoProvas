@@ -45,6 +45,14 @@ describe("POST /new_test", () => {
   });
 });
 
+describe("GET /categories", () => {
+  it("returns status 200 for successfuly get categories", async () => {
+    const result = await supertest(app).get("/categories");
+
+    expect(result.status).toEqual(200);
+  });
+});
+
 describe("GET /course/:id/teachers/exams", () => {
   beforeEach(insertFakeExam);
 

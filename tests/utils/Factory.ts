@@ -5,10 +5,9 @@ export function createNewExam() {
   const subjectId = 1;
   const teacherId = 1;
   const categoryId = 1;
-  const semester = "2021.2";
-  const year = faker.date.recent();
+  const semester = { year: "2021", name: "1" };
 
-  return { link, subjectId, teacherId, categoryId, semester, year };
+  return { link, subjectId, teacherId, categoryId, semester };
 }
 
 export function createNewCourse() {
@@ -40,7 +39,7 @@ export function createNewCategory() {
 }
 
 export function createNewSemester() {
-  const name = "2021.2";
+  const name = "1";
   const year = "2021";
   return { name, year };
 }

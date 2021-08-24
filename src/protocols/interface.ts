@@ -3,8 +3,7 @@ export interface PostNewExamBody {
   categoryId: number;
   subjectId: number;
   teacherId: number;
-  semester: string;
-  year: Date;
+  semester: SemesterBody;
 }
 
 export interface InsertParams {
@@ -13,4 +12,9 @@ export interface InsertParams {
   subjectId: number;
   teacherId: number;
   semesterId: number;
+}
+
+export interface SemesterBody {
+  year: string;
+  name: string;
 }

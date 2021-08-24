@@ -1,26 +1,30 @@
 import { getRepository } from "typeorm";
-import { InsertParams } from "../protocols/interface";
+import { InsertParams, SemesterBody } from "../protocols/interface";
 
 import Tests from "../entities/Exam";
-import Subject from "../entities/Subject";
 import Teacher from "../entities/Teacher";
-import Semester from "../entities/Semester";
-import SubjectTeacher from "../entities/SubjectTeacher";
-import Period from "../entities/Semester";
-import Course from "../entities/Course";
-
 import Term from "../entities/Term";
+import Category from "../entities/Category";
+import Semester from "../entities/Semester";
+
+export async function getAllCategories() {
+  const result = await getRepository(Category).find();
+
+  return result;
+}
 
 export async function saveNewTest(params: InsertParams) {
   return await getRepository(Tests).insert(params);
 }
 
-export async function checkYears(period: string, year: string) {
-  const existingYear = await getRepository(Period).find({ where: { name: period } });
+export async function checkYears(semester: SemesterBody) {
+  const { year, name } = semester;
+  const existingYear = await getRepository(Semester).find({
+    where: [{ name }, { year }],
+  });
 
   if (existingYear.length === 0) {
-    return (await getRepository(Period).insert({ name: period, year })).generatedMaps[0]
-      .id;
+    return (await getRepository(Semester).insert({ name, year })).generatedMaps[0].id;
   }
 
   return existingYear[0].id;
