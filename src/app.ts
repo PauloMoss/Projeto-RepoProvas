@@ -1,30 +1,32 @@
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
 import "reflect-metadata";
 
 import connectDatabase from "./database";
-import * as testsController from './Controllers/testsController'
+import * as courseController from "./controllers/courseController";
+import * as examController from "./controllers/examController";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/subjects/new_test", testsController.getSubjectsWithTeachers);
+app.post("/new_test", examController.postNewExam);
 
-app.post("/new_test", testsController.postNewTest);
+app.get("/categories", examController.getCategories);
 
-app.get("/subjects", testsController.getSubjectsBySemester);
+app.get("/courses", courseController.getCourses);
 
-app.get("/teachers", testsController.getAllTeachers);
+app.get("/course/:id/subjects", courseController.getCourseSubjects);
 
-app.get("/tests/subject/:id", testsController.getTestsBySubjectId);
+app.get("/subject/:id/teachers", courseController.getSubjectTeachers);
 
-app.get("/tests/teacher/:id", testsController.getTestsByTeacherId);
+app.get("/course/:id/teachers/exams", examController.getExamsFromCourseTeachers);
+
+app.get("/course/:id/subjects/exams", examController.getExamsFromCourseSubjects);
 
 export default app;
 
 export async function init() {
-  
-    await connectDatabase()
+  await connectDatabase();
 }

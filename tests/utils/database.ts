@@ -1,42 +1,48 @@
 import { getConnection, getRepository } from "typeorm";
-import Tests from "../../src/Entities/Tests";
-import Category from "../../src/Entities/Category";
-import Period from "../../src/Entities/Period";
-import Semester from "../../src/Entities/Semester";
-import Subject from "../../src/Entities/Subjects";
-import Teacher from "../../src/Entities/Teacher";
-import * as Factory from './Factory';
+
+import Exam from "../../src/entities/Exam";
+import Category from "../../src/entities/Category";
+import Semester from "../../src/entities/Semester";
+import Term from "../../src/entities/Term";
+import Subject from "../../src/entities/Subject";
+import Teacher from "../../src/entities/Teacher";
+import Course from "../../src/entities/Course";
+import * as Factory from "./Factory";
+import CourseTeacher from "../../src/entities/CourseTeacher";
+import SubjectTeacher from "../../src/entities/SubjectTeacher";
 
 export async function clearDatabase() {
-
-    await getConnection().query("TRUNCATE semester RESTART IDENTITY CASCADE");
-    await getConnection().query("TRUNCATE period RESTART IDENTITY CASCADE");
-    await getConnection().query("TRUNCATE teachers RESTART IDENTITY CASCADE");
-    await getConnection().query("TRUNCATE category RESTART IDENTITY CASCADE");
+  await getConnection().query("TRUNCATE term RESTART IDENTITY CASCADE");
+  await getConnection().query("TRUNCATE semester RESTART IDENTITY CASCADE");
+  await getConnection().query("TRUNCATE teacher RESTART IDENTITY CASCADE");
+  await getConnection().query("TRUNCATE category RESTART IDENTITY CASCADE");
 }
 
-export async function insertFakeTest() {
+export async function insertFakeExam() {
+  const params = Factory.createNewExam();
 
-    const params = Factory.createNewTest()
-
-    const {link, subjectId, teacherId, categoryId} = params;
-    const periodId = 1;
-    const body = {link, subjectId, teacherId, categoryId, periodId}
-    await getRepository(Tests).insert(body)
+  const { link, subjectId, teacherId, categoryId } = params;
+  const semesterId = 1;
+  const body = { link, subjectId, teacherId, semesterId, categoryId };
+  await getRepository(Exam).insert(body);
 }
 
 export async function populateDatabase() {
+  const course = Factory.createNewCourse();
+  const category = Factory.createNewCategory();
+  const semester = Factory.createNewSemester();
+  const term = Factory.createNewTerm();
+  const teacher = Factory.createNewTeacher();
+  const subject = Factory.createNewSubject();
+  const courseTeacherRelation = Factory.createNewCourseTeacherRelation();
+  const subjectTeacherRelation = Factory.createNewSubjectTeacherRelation();
 
-    const category = Factory.createNewCategory();
-    const period = Factory.createNewPeriod();
-    const semester = Factory.createNewSemester()
-    const teacher = Factory.createNewTeacher()
-    const subject = Factory.createNewSubject()
-
-    await getRepository(Category).insert({ name:category })
-    await getRepository(Period).insert(period)
-    await getRepository(Semester).insert({ name:semester })
-    await getRepository(Subject).insert(subject)
-    await getRepository(Teacher).insert({ name: teacher })
-    await getConnection().query(`INSERT INTO subjects_teachers ("subjectId", "teacherId") VALUES (1,1)`);
+  await getRepository(Course).insert(course);
+  await getRepository(Category).insert({ name: category });
+  await getRepository(Semester).insert(semester);
+  await getRepository(Term).insert(term);
+  await getRepository(Subject).insert(subject);
+  await getRepository(Teacher).insert({ name: teacher });
+  await getRepository(CourseTeacher).insert(courseTeacherRelation);
+  await getRepository(SubjectTeacher).insert(subjectTeacherRelation);
 }
