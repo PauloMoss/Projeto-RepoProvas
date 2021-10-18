@@ -19,15 +19,14 @@ export async function saveNewTest(params: InsertParams) {
 
 export async function checkYears(semester: SemesterBody) {
   const { year, name } = semester;
-  const existingYear = await getRepository(Semester).find({
-    where: [{ name }, { year }],
+  const existingYear = await getRepository(Semester).findOne({
+    where: [{ year, name }],
   });
-
-  if (existingYear.length === 0) {
+  if (!existingYear) {
     return (await getRepository(Semester).insert({ name, year })).generatedMaps[0].id;
   }
 
-  return existingYear[0].id;
+  return existingYear.id;
 }
 
 export async function getTeachersExams(courseId: number) {
